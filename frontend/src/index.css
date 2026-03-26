@@ -1,0 +1,168 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 20% 97%;
+    --foreground: 230 25% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 230 25% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 230 25% 10%;
+
+    --primary: 235 70% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 15% 93%;
+    --secondary-foreground: 230 25% 15%;
+
+    --muted: 220 15% 94%;
+    --muted-foreground: 220 10% 45%;
+
+    --accent: 270 60% 58%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 15% 90%;
+    --input: 220 15% 90%;
+    --ring: 235 70% 55%;
+
+    --radius: 0.625rem;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 230 15% 30%;
+    --sidebar-primary: 235 70% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 235 60% 96%;
+    --sidebar-accent-foreground: 235 70% 45%;
+    --sidebar-border: 220 15% 92%;
+    --sidebar-ring: 235 70% 55%;
+
+    --gradient-start: 235 85% 60%;
+    --gradient-mid: 255 70% 58%;
+    --gradient-end: 280 65% 55%;
+
+    --success: 150 60% 42%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    --info: 200 80% 50%;
+    --info-foreground: 0 0% 100%;
+  }
+
+  .dark {
+    --background: 230 25% 7%;
+    --foreground: 220 15% 92%;
+
+    --card: 230 22% 10%;
+    --card-foreground: 220 15% 92%;
+
+    --popover: 230 22% 10%;
+    --popover-foreground: 220 15% 92%;
+
+    --primary: 235 75% 62%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 230 18% 16%;
+    --secondary-foreground: 220 15% 85%;
+
+    --muted: 230 18% 16%;
+    --muted-foreground: 220 10% 55%;
+
+    --accent: 270 55% 62%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 230 15% 18%;
+    --input: 230 15% 18%;
+    --ring: 235 75% 62%;
+
+    --sidebar-background: 230 22% 9%;
+    --sidebar-foreground: 220 10% 75%;
+    --sidebar-primary: 235 75% 62%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 230 20% 14%;
+    --sidebar-accent-foreground: 220 15% 85%;
+    --sidebar-border: 230 15% 15%;
+    --sidebar-ring: 235 75% 62%;
+
+    --gradient-start: 235 80% 65%;
+    --gradient-mid: 255 65% 62%;
+    --gradient-end: 280 60% 60%;
+
+    --success: 150 55% 48%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 85% 55%;
+    --warning-foreground: 0 0% 100%;
+    --info: 200 75% 55%;
+    --info-foreground: 0 0% 100%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: "Inter", system-ui, sans-serif;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Space Grotesk", system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  .gradient-primary {
+    @apply bg-gradient-to-r from-[hsl(var(--gradient-start))] via-[hsl(var(--gradient-mid))] to-[hsl(var(--gradient-end))];
+  }
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[hsl(var(--gradient-start))] via-[hsl(var(--gradient-mid))] to-[hsl(var(--gradient-end))];
+  }
+  .glass-card {
+    @apply bg-card/80 backdrop-blur-xl border border-border/50 shadow-lg;
+  }
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
+  }
+}
+
+@layer utilities {
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+  .animate-glow {
+    animation: glow 3s ease-in-out infinite alternate;
+  }
+  @keyframes glow {
+    from {
+      box-shadow: 0 0 20px hsla(235, 48%, 46%, 0.2);
+    }
+    to {
+      box-shadow: 0 0 40px hsl(270 60% 58% / 0.4);
+    }
+  }
+}

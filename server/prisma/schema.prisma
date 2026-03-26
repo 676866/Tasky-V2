@@ -1,0 +1,151 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  REVIEW
+  DONE
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum NotificationType {
+  REMINDER
+  ASSIGNMENT
+  UPDATE
+  INFO
+}
+
+model User {
+  id                   String         @id @default(uuid())
+  email                String         @unique
+  name                 String
+  password             String
+  avatar               String?
+  role                 UserRole       @default(USER)
+  onboardingCompleted  Boolean        @default(false)
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+
+  // Relations
+  ownedOrganizations Organization[] @relation("OrganizationOwner")
+  memberships        Membership[]
+  createdTasks       Task[]         @relation("TaskCreator")
+  assignedTasks      Task[]         @relation("TaskAssignee")
+  sentReminders      Reminder[]     @relation("ReminderSender")
+  receivedReminders  Reminder[]     @relation("ReminderRecipient")
+  notifications      Notification[]
+
+  @@map("users")
+}
+
+model Organization {
+  id          String       @id @default(uuid())
+  name        String
+  description String?
+  groupSize   String?      // e.g. "1-2", "3-10", "10-20", "20+"
+  sector      String?      // e.g. "Health & Medical", "Transport", "Technology"
+  inviteCode  String       @unique
+  ownerId     String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  // Relations
+  owner       User         @relation("OrganizationOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  memberships Membership[]
+  tasks       Task[]
+  reminders   Reminder[]
+
+  @@map("organizations")
+}
+
+model Membership {
+  id             String       @id @default(uuid())
+  userId         String
+  organizationId String
+  role           UserRole     @default(USER)
+  joinedAt       DateTime     @default(now())
+
+  // Relations
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, organizationId])
+  @@map("memberships")
+}
+
+model Task {
+  id             String       @id @default(uuid())
+  title          String
+  description    String?
+  status         TaskStatus   @default(TODO)
+  priority       TaskPriority @default(MEDIUM)
+  dueDate        DateTime?
+  tags           String[]
+  creatorId      String
+  assigneeId     String?
+  organizationId String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  // Relations
+  creator        User         @relation("TaskCreator", fields: [creatorId], references: [id], onDelete: Cascade)
+  assignee       User?        @relation("TaskAssignee", fields: [assigneeId], references: [id], onDelete: SetNull)
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  reminders      Reminder[]
+  notifications  Notification[]
+
+  @@map("tasks")
+}
+
+model Reminder {
+  id             String       @id @default(uuid())
+  message        String
+  taskId         String
+  senderId       String
+  recipientId    String
+  organizationId String
+  createdAt      DateTime     @default(now())
+
+  // Relations
+  task           Task         @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  sender         User         @relation("ReminderSender", fields: [senderId], references: [id], onDelete: Cascade)
+  recipient      User         @relation("ReminderRecipient", fields: [recipientId], references: [id], onDelete: Cascade)
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@map("reminders")
+}
+
+model Notification {
+  id        String           @id @default(uuid())
+  title     String
+  message   String
+  type      NotificationType @default(INFO)
+  read      Boolean          @default(false)
+  userId    String
+  taskId    String?
+  createdAt DateTime         @default(now())
+
+  // Relations
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  task      Task?            @relation(fields: [taskId], references: [id], onDelete: SetNull)
+
+  @@map("notifications")
+}
