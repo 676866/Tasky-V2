@@ -6,13 +6,35 @@ import { useState, useEffect, useCallback } from "react";
 import { FaLinkedin, FaGithub, FaXTwitter } from "react-icons/fa6";
 
 const features = [
-  { icon: Zap, title: "Lightning Fast", desc: "Create and assign tasks in seconds with our streamlined interface." },
-  { icon: Users, title: "Team Collaboration", desc: "Invite members, assign tasks, and track progress together." },
-  { icon: BarChart3, title: "Smart Analytics", desc: "Gain insights into productivity with real-time dashboards." },
-  { icon: Shield, title: "Role-Based Access", desc: "Admin and user roles with granular permissions." },
-  { icon: Clock, title: "Due Date Tracking", desc: "Never miss a deadline with smart reminders and filters." },
-  { icon: CheckCircle, title: "Kanban Board", desc: "Drag-and-drop task management in a visual board." },
+  { 
+    title: "Lightning Fast", 
+    desc: "Create and assign tasks in seconds with our streamlined interface that feels like second nature.",
+    author: "Product Team",
+    category: "Efficiency" 
+  },
+  { 
+    title: "Team Collaboration", 
+    desc: "Invite members, assign tasks, and track progress together without the typical communication overhead.",
+    author: "Operations Dept",
+    category: "Connectivity"
+  },
+  { 
+    title: "Intelligent Workflows", 
+    desc: "Automate routine tasks and get smart suggestions to keep your projects moving forward effortlessly.",
+    author: "Product Team",
+    category: "Automation"
+   },
+   {
+    title: "Robust Security",
+    desc: "Your data is safe with us. We use industry-leading security practices to protect your information.",
+    author: "Security Team",
+    category: "Trust"
+  
+  },
+  
+  // ... repeat for other items
 ];
+
 
 const pricingPlans = [
   { name: "Free", price: "KES 0", period: "/month", features: ["5 personal tasks", "1 organization", "Basic filters", "Email support"], cta: "Get Started", popular: false },
@@ -91,6 +113,12 @@ export default function LandingPage() {
             <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
               Organize, collaborate, and ship faster. Tasky brings your team together with intelligent task workflows and beautiful Kanban boards.
             </p>
+
+            <img
+                src="https://media.istockphoto.com/id/2093222366/photo/businesswoman-planning-on-a-digital-calendar-and-effective-task-management.jpg?s=1024x1024&w=is&k=20&c=ENimlHY1AYEDUEEgYeE0tSXwdMYVgVo8G05P6Ii0Z3A="
+                alt="Task Illustration"
+                className="max-w-[460px] w-full mx-auto rounded-3xl shadow-xl mb-12"
+              />
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button size="lg" className="gradient-primary text-primary-foreground border-0 px-8 h-12 text-base group" onClick={() => navigate("/signup")}>
                 Start for free <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -102,73 +130,153 @@ export default function LandingPage() {
           </motion.div>
 
           {/* Hero visual */}
-          <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }} className="mt-16 max-w-4xl mx-auto">
-            <div className="rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm shadow-2xl p-1.5 animate-glow">
-              <div className="rounded-lg bg-card p-6">
-                <div className="grid grid-cols-4 gap-4">
-                  {["To Do", "In Progress", "Review", "Done"].map((col, i) => (
-                    <div key={col} className="space-y-3">
-                      <div className="flex items-center gap-2">
-                        <div className={`w-2 h-2 rounded-full ${["bg-muted-foreground", "bg-info", "bg-warning", "bg-success"][i]}`} />
-                        <span className="text-sm font-medium">{col}</span>
-                        <span className="text-xs text-muted-foreground ml-auto">{[3, 2, 1, 2][i]}</span>
-                      </div>
-                      {Array.from({ length: [3, 2, 1, 2][i] }).map((_, j) => (
-                        <motion.div
-                          key={j}
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: 0.5 + i * 0.1 + j * 0.05 }}
-                          className="rounded-lg border border-border p-3 bg-background hover-lift cursor-pointer"
-                        >
-                          <div className="h-2 w-3/4 bg-muted rounded mb-2" />
-                          <div className="h-2 w-1/2 bg-muted rounded" />
-                        </motion.div>
-                      ))}
-                    </div>
-                  ))}
-                </div>
+<motion.div 
+  initial={{ opacity: 0, y: 50 }} 
+  animate={{ opacity: 1, y: 0 }} 
+  transition={{ duration: 0.8, delay: 0.3 }} 
+  className="mt-16 max-w-5xl mx-auto px-4"
+>
+  {/* The "Amazing" Container with the purple ambient glow from your screenshot */}
+  <div className="rounded-2xl border border-white/20 bg-white/80 dark:bg-card/50 backdrop-blur-xl p-2 shadow-[0_0_50px_-12px_rgba(168,85,247,0.4)]">
+    <div className="rounded-xl bg-white dark:bg-[#0A0A0A] p-6 shadow-inner">
+      
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        {[
+          { label: "To Do", count: 3, color: "bg-slate-400", tasks: ["visit the dentist", "Client Meeting", "do my homework"] },
+          { label: "In Progress", count: 2, color: "bg-blue-500", tasks: ["recording marks", "API Integration"] },
+          { label: "Review", count: 1, color: "bg-orange-500", tasks: ["User Testing"] },
+          { label: "Done", count: 2, color: "bg-emerald-500", tasks: ["Project Setup", "backup installation"] }
+        ].map((col, i) => (
+          <div key={col.label} className="space-y-4">
+            {/* Column Header */}
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-white/5">
+              <div className="flex items-center gap-2">
+                <div className={`w-2 h-2 rounded-full ${col.color} shadow-sm`} />
+                <span className="text-[12px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-tight">{col.label}</span>
               </div>
+              <span className="text-[11px] font-medium text-slate-400 bg-slate-50 dark:bg-white/5 px-2 py-0.5 rounded-full">{col.count}</span>
             </div>
-          </motion.div>
+
+            {/* Task Cards */}
+            <div className="space-y-3">
+              {col.tasks.map((task, j) => (
+                <motion.div
+                  key={task}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.5 + i * 0.1 + j * 0.05 }}
+                  className="group rounded-xl border border-slate-100 dark:border-white/5 p-4 bg-white dark:bg-[#111111] hover:shadow-xl hover:shadow-indigo-100 hover:-translate-y-1 transition-all cursor-pointer"
+                >
+                  <div className="flex flex-col gap-3">
+                    <p className="text-[13px] font-semibold text-slate-700 dark:text-slate-200 leading-tight">
+                      {task}
+                    </p>
+                    {/* Visual dummy "meta data" to make it look like a real app */}
+                    <div className="flex items-center gap-2">
+                      <div className="h-1.5 w-10 bg-indigo-100 dark:bg-indigo-500/20 rounded-full" />
+                      <div className="h-1.5 w-6 bg-slate-100 dark:bg-white/5 rounded-full" />
+                      <div className="ml-auto flex -space-x-2">
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</motion.div>
+
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="py-12 border-y border-border/50 bg-card/50">
-        <div className="container mx-auto px-4">
-          <motion.div variants={container} initial="hidden" whileInView="show" viewport={{ once: true }} className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((s) => (
-              <motion.div key={s.label} variants={item} className="text-center">
-                <p className="text-3xl md:text-4xl font-display font-bold gradient-text">{s.value}</p>
-                <p className="text-sm text-muted-foreground mt-1">{s.label}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
+   {/* Stats Section */}
+<section className="py-24 bg-white dark:bg-[#030303] border-y border-gray-100 dark:border-white/5">
+  <div className="container mx-auto px-4">
+    <motion.div 
+      variants={container} 
+      initial="hidden" 
+      whileInView="show" 
+      viewport={{ once: true }} 
+      className="grid grid-cols-2 lg:grid-cols-4 gap-12"
+    >
+      {stats.map((s) => (
+        <motion.div key={s.label} variants={item} className="flex flex-col items-center group">
+          {/* Large Number - High Contrast */}
+          <div className="relative">
+            <h3 className="text-5xl md:text-6xl font-bold tracking-tighter text-gray-900 dark:text-white/90">
+              {s.value}
+            </h3>
+            {/* Subtle glow behind number (optional, for that 'smart' feel) */}
+            <div className="absolute inset-0 bg-indigo-500/10 blur-2xl rounded-full scale-150 opacity-0 group-hover:opacity-100 transition-opacity" />
+          </div>
 
-      {/* Features */}
-      <section id="features" className="py-20 bg-secondary/30">
-        <div className="container mx-auto px-4">
-          <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center mb-14">
-            <span className="text-sm font-medium text-primary mb-2 block">FEATURES</span>
-            <h2 className="text-3xl md:text-4xl font-bold font-mono mb-4">Everything you need to ship</h2>
-            <p className="text-muted-foreground max-w-md mx-auto">Powerful features designed for modern teams.</p>
-          </motion.div>
-          <motion.div variants={container} initial="hidden" whileInView="show" viewport={{ once: true }} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {features.map((f) => (
-              <motion.div key={f.title} variants={item} className="glass-card rounded-xl p-6 hover-lift group">
-                <div className="w-10 h-10 rounded-lg gradient-primary flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <f.icon className="w-5 h-5 text-primary-foreground" />
-                </div>
-                <h3 className="font-display font-semibold text-lg mb-2">{f.title}</h3>
-                <p className="text-sm text-muted-foreground">{f.desc}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
+          {/* Label - Indigo/Purple Accent */}
+          <p className="mt-4 text-xs md:text-sm font-black uppercase tracking-[0.3em] text-indigo-600 dark:text-indigo-400/80">
+            {s.label}
+          </p>
+
+          {/* The Underline Glow (Exactly like your screenshot) */}
+          <div className="mt-6 relative h-[2px] w-12 overflow-hidden rounded-full bg-gray-200 dark:bg-white/10">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent shadow-[0_0_8px_rgba(99,102,241,0.8)]" />
+          </div>
+        </motion.div>
+      ))}
+    </motion.div>
+  </div>
+</section>
+
+
+
+   {/* Features Section */}
+<section id="features" className="py-20 bg-secondary/30">
+  <div className="container mx-auto px-4">
+    {/* Retained original header */}
+    <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center mb-14">
+      <span className="text-sm font-medium text-primary mb-2 block uppercase tracking-wider">Features</span>
+      <h2 className="text-3xl md:text-4xl font-bold font-mono mb-4">Everything you need to ship</h2>
+      <p className="text-muted-foreground max-w-md mx-auto">Powerful features designed for modern teams.</p>
+    </motion.div>
+
+    <motion.div variants={container} initial="hidden" whileInView="show" viewport={{ once: true }} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      {features.map((f) => (
+        <motion.div 
+          key={f.title} 
+          variants={item} 
+          /* FlutterFlow Card Styling */
+          className="relative min-h-[320px] rounded-3xl p-10 flex flex-col bg-gradient-to-br from-[#a341b9] via-[#42166b] to-[#121111] border border-white/5 hover:border-indigo-100 transition-all duration-100 group overflow-hidden shadow-2x1"
+        >
+          {/* Card Header */}
+          <h3 className="text-xl font-bold text-white/90 mb-8 tracking-tight">
+            {f.title}
+          </h3>
+
+          {/* Card Body (Description styled as a quote) */}
+          <p className="text-lg leading-relaxed text-gray-300/90 font-medium mb-12 flex-grow">
+            "{f.desc}"
+          </p>
+
+          {/* Card Footer (Author/Role style) */}
+          <div className="mt-auto pt-6 border-t border-white/5">
+            <div className="font-bold text-white text-md">
+              {f.title.split(' ')[0]} Module
+            </div>
+            <div className="text-xs text-gray-500 font-bold uppercase tracking-widest">
+              System Core
+            </div>
+          </div>
+
+          {/* Background Glow Effect on hover */}
+          <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-indigo-500/10 blur-[80px] rounded-full group-hover:bg-indigo-100/20 transition-all" />
+        </motion.div>
+      ))}
+    </motion.div>
+  </div>
+</section>
+
+
 
       {/* Testimonials Carousel */}
       <section id="testimonials" className="py-20">
