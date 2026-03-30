@@ -114,11 +114,11 @@ export default function LandingPage() {
               Organize, collaborate, and ship faster. Tasky brings your team together with intelligent task workflows and beautiful Kanban boards.
             </p>
 
-            <img
+            {/* <img
                 src="https://media.istockphoto.com/id/2093222366/photo/businesswoman-planning-on-a-digital-calendar-and-effective-task-management.jpg?s=1024x1024&w=is&k=20&c=ENimlHY1AYEDUEEgYeE0tSXwdMYVgVo8G05P6Ii0Z3A="
                 alt="Task Illustration"
                 className="max-w-[460px] w-full mx-auto rounded-3xl shadow-xl mb-12"
-              />
+              /> */}
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button size="lg" className="gradient-primary text-primary-foreground border-0 px-8 h-12 text-base group" onClick={() => navigate("/signup")}>
                 Start for free <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
