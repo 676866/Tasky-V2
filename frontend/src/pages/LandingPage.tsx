@@ -106,9 +106,9 @@ export default function LandingPage() {
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
               <Zap className="w-3.5 h-3.5" /> Now with Kanban drag-and-drop
             </div>
-            <h1 className="text-5xl md:text-7xl font-display font-bold leading-tight mb-6">
+            <h1 className="text-5xl md:text-7xl font-sans font-semibold leading-tight mb-6">
               Task management{" "}
-              <span className="text-fuchsia-950 font-mono">reimagined</span>
+              <span className="text-fuchsia-900 font-mono">reimagined</span>
             </h1>
             <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
               Organize, collaborate, and ship faster. Tasky brings your team together with intelligent task workflows and beautiful Kanban boards.
@@ -254,7 +254,7 @@ export default function LandingPage() {
           </h3>
 
           {/* Card Body (Description styled as a quote) */}
-          <p className="text-lg leading-relaxed text-gray-300/90 font-medium mb-12 flex-grow">
+          <p className="text-lg leading-relaxed text-gray-300/90 font-medium mb-1 flex-grow">
             "{f.desc}"
           </p>
 
