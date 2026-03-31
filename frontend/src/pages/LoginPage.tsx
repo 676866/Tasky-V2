@@ -3,11 +3,12 @@ import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CheckCircle, Loader2 } from "lucide-react";
+import { CheckCircle, Loader2, Mail, Lock, Chrome, Github, ArrowRight } from "lucide-react";
 import { api } from "@/lib/api";
 import { useAuthStore } from "@/store/auth-store";
 import { toast } from "sonner";
 import { getAuthClient } from "@/lib/auth";
+import { motion } from "framer-motion";
 
 export default function LoginPage() {
   const { user, _hasHydrated, onboardingCompleted } = useAuthStore();
@@ -26,9 +27,7 @@ export default function LoginPage() {
     }
   }, [_hasHydrated, user, onboardingCompleted, navigate]);
 
-  if (_hasHydrated && user) {
-    return null;
-  }
+  if (_hasHydrated && user) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,79 +59,132 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex">
-      <div className="hidden lg:flex flex-1 gradient-primary items-center justify-center p-12">
-        <div className="text-primary-foreground max-w-md">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-xl bg-primary-foreground/20 flex items-center justify-center">
-              <CheckCircle className="w-6 h-6" />
-            </div>
-            <span className="text-2xl font-display font-bold">Tasky</span>
-          </div>
-          <h2 className="text-3xl font-display font-bold mb-4">Welcome back</h2>
-          <p className="text-primary-foreground/70">
-            Sign in to manage your tasks and collaborate with your team.
-          </p>
+    <div className="min-h-screen flex bg-white overflow-hidden">
+      
+      {/* LEFT PANEL: Branding & Mesh Gradient */}
+      <div className="hidden lg:flex flex-[1.1] relative overflow-hidden bg-[#1e061f]">
+        {/* Mesh Gradient (Sky Blue & Pink) */}
+        <div className="absolute inset-0">
+          <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-sky-400/20 blur-[120px] rounded-full" />
+          <div className="absolute bottom-[-5%] right-[5%] w-[40%] h-[40%] bg-pink-400/10 blur-[120px] rounded-full" />
         </div>
-      </div>
-      <div className="flex-1 flex items-center justify-center p-6">
-        <div className="w-full max-w-sm space-y-6">
-          <div className="lg:hidden flex items-center gap-2 mb-4">
-            <div className="w-8 h-8 rounded-lg gradient-primary flex items-center justify-center">
-              <CheckCircle className="w-5 h-5 text-primary-foreground" />
+
+        {/* Curved Divider */}
+        <div className="absolute -right-1 top-0 h-full w-32 z-10">
+          <svg className="h-full w-full fill-white" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M0 0 C 40 0, 100 20, 100 100 L 100 0 Z" />
+          </svg>
+        </div>
+
+        <div className="relative z-20 flex flex-col justify-between p-16 w-full">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+              <CheckCircle className="w-6 h-6 text-white" />
             </div>
-            <span className="text-xl font-display font-bold">Tasky</span>
+            <span className="text-2xl font-bold tracking-tighter text-white">Tasky.</span>
           </div>
-          <div>
-            <h1 className="text-2xl font-display font-bold">Sign in</h1>
-            <p className="text-sm text-muted-foreground mt-1">
-              Enter your credentials to continue
+
+          <div className="max-w-md space-y-8">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-sky-300 text-[10px] font-bold uppercase tracking-[0.2em]">
+               <span className="flex h-1.5 w-1.5 rounded-full bg-sky-400 animate-pulse" />
+               ToDo to Done? Drug it with ease.
+            </div>
+
+            <h2 className="text-6xl font-bold text-white leading-[1.1] tracking-tight">
+              Productivity <br /> 
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-pink-400 italic">
+                without the tears.
+              </span>
+            </h2>
+            
+            <p className="text-lg text-white/50 font-medium leading-relaxed">
+              Sign in to manage your tasks and collaborate with your team in real-time.
             </p>
           </div>
-          <form onSubmit={handleSubmit} className="space-y-4">
+
+          <div className="flex items-center gap-6 text-[10px] font-bold uppercase tracking-[0.3em] text-white/20">
+            <span>SECURE</span>
+            <span>ENCRYPTED</span>
+            <span>PRIVATE</span>
+          </div>
+        </div>
+      </div>
+
+      {/* RIGHT PANEL: Login Form */}
+      <div className="flex-1 flex items-center justify-center p-8 lg:p-20">
+        <div className="w-full max-w-md">
+          <div className="mb-10">
+            <h1 className="text-4xl font-bold tracking-tight text-slate-900">Welcome back</h1>
+            <p className="text-slate-500 mt-2">Enter your credentials to continue</p>
+          </div>
+
+          {/* Social Logins */}
+          {/* <div className="grid grid-cols-2 gap-4 mb-8">
+            <Button variant="outline" className="h-12 rounded-xl border-slate-100 bg-slate-50/50 hover:bg-slate-100 font-semibold text-slate-600">
+              <Chrome className="mr-2 w-4 h-4 text-slate-400" /> Google
+            </Button>
+            <Button variant="outline" className="h-12 rounded-xl border-slate-100 bg-slate-50/50 hover:bg-slate-100 font-semibold text-slate-600">
+              <Github className="mr-2 w-4 h-4 text-slate-400" /> GitHub
+            </Button>
+          </div>
+
+          <div className="relative flex items-center justify-center py-2 mb-8">
+            <div className="absolute inset-0 flex items-center"><span className="w-full border-t border-slate-100" /></div>
+            <span className="relative bg-white px-4 text-[10px] font-bold uppercase tracking-widest text-slate-400">OR CONTINUE WITH</span>
+          </div> */}
+
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="admin@tasky.io"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
+              <Label htmlFor="email" className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Email Address</Label>
+              <div className="relative">
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300" />
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="admin@tasky.io"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="h-14 pl-12 rounded-2xl border-slate-100 bg-slate-50/30 focus:ring-4 focus:ring-sky-500/5 transition-all text-lg"
+                  required
+                />
+              </div>
             </div>
+
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="Any password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+              {/* <div className="flex items-center justify-between px-1">
+                <Label htmlFor="password" title="Password" className="text-[10px] font-black uppercase tracking-widest text-slate-400">Password</Label>
+                <Link to="#" className="text-[10px] font-bold text-indigo-600 hover:underline">Forgot Password?</Link>
+              </div> */}
+              <div className="relative">
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300" />
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="yoursecurepassword"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="h-14 pl-12 rounded-2xl border-slate-100 bg-slate-50/30 focus:ring-4 focus:ring-sky-500/5 transition-all text-lg"
+                  required
+                />
+              </div>
             </div>
+
             <Button
               type="submit"
-              className="w-full gradient-primary text-primary-foreground border-0"
+              className="w-full h-14 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-lg shadow-xl shadow-indigo-500/20 transition-all active:scale-[0.98]"
               disabled={loading}
             >
-              {loading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-              Sign in
+              {loading ? <Loader2 className="w-6 h-6 animate-spin mr-2" /> : <>Sign In <ArrowRight className="ml-2 w-5 h-5" /></>}
             </Button>
           </form>
-          <p className="text-sm text-center text-muted-foreground">
-            Don't have an account?{" "}
-            <Link
-              to="/signup"
-              className="text-primary font-medium hover:underline"
-            >
-              Sign up
-            </Link>
+
+          <p className="mt-10 text-center text-slate-500 font-medium">
+            New to the platform? <Link to="/signup" className="text-indigo-600 font-bold hover:underline underline-offset-4">Create Account</Link>
           </p>
-          <div className="text-xs text-muted-foreground text-center p-3 rounded-lg bg-muted/50">
-            <strong>Demo:</strong> admin@tasky.io or user@tasky.io (any
-            password)
+
+          <div className="mt-8 text-[11px] font-medium text-slate-400 text-center p-4 rounded-2xl bg-slate-50 border border-slate-100">
+            <span className="text-slate-900 font-bold mr-1 uppercase tracking-tighter">Demo:</span> 
+            admin@tasky.io or user@tasky.io (any password)
           </div>
         </div>
       </div>
