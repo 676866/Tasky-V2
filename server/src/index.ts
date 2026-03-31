@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 3001;
 // Middleware
 const allowedOrigins = (
   process.env.CORS_ORIGIN ||
-  "http://localhost:5173,http://localhost:8080,https://lovable.dev,https://tasky-omega-beryl.vercel.app"
+  "https://tasky-v2-three.vercel.app/"
 )
   .split(",")
   .map((o) => o.trim());
