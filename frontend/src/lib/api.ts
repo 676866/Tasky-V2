@@ -9,7 +9,7 @@ import {
 import { useAuthStore } from "@/store/auth-store";
 
 const getBaseUrl = () =>
-  import.meta.env.VITE_API_URL || "http://localhost:3001";
+  import.meta.env.VITE_API_URL || "https://tasky-v2.onrender.com";
 const getToken = () => useAuthStore.getState().token;
 
 function toFrontendStatus(s: string): TaskStatus {
