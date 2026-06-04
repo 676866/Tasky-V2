@@ -452,7 +452,7 @@ export default function LandingPage() {
 
       {/* GitHub */}
       <a
-        href="https://github.com/676866"
+        href="https://github.com/FrankKober"
         target="_blank"
         rel="noopener noreferrer"
         className="cursor-pointer hover:text-foreground transition-colors"
